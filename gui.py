@@ -202,3 +202,27 @@ if st.button("Start Compute"):
         st.dataframe(df_frequency_scale)
     st.markdown("""---""")
 
+footer = """
+    <style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #f1f1f1;
+        text-align: center;
+        padding: 10px;
+        font-size: 14px;
+        color: #333;
+    }
+    </style>
+
+    <div class="footer">
+        <p><b>Firza Aji Zunaarta (5023211002)</b> <br>
+        Continuous Wavelength Transform - Analisis Sinyal Nonstasioner <br>
+        2024</p>
+    </div>
+"""
+
+# Menampilkan footer di aplikasi Streamlit
+st.markdown(footer, unsafe_allow_html=True)
