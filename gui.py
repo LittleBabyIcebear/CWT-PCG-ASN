@@ -202,27 +202,11 @@ if st.button("Start Compute"):
         st.dataframe(df_frequency_scale)
     st.markdown("""---""")
 
-footer = """
-    <style>
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #f1f1f1;
-        text-align: center;
-        padding: 10px;
-        font-size: 14px;
-        color: #333;
-    }
-    </style>
+# Menampilkan footer di tengah menggunakan Markdown
+st.markdown("<br><br><br>", unsafe_allow_html=True)  # Spacer untuk memisahkan footer dari konten utama
+st.write("### Firza Aji Zunaarta (5023211002)")
+st.write("### Continuous Wavelength Transform - Analisis Sinyal Nonstasioner")
+st.write("### 2024")
 
-    <div class="footer">
-        <p><b>Firza Aji Zunaarta (5023211002)</b> <br>
-        Continuous Wavelength Transform - Analisis Sinyal Nonstasioner <br>
-        2024</p>
-    </div>
-"""
-
-# Menampilkan footer di aplikasi Streamlit
-st.markdown(footer, unsafe_allow_html=True)
+# Untuk memastikan footer berada di bagian bawah, Anda bisa menambahkan spacer jika perlu
+st.markdown("<br><br><br>", unsafe_allow_html=True)
