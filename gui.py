@@ -202,11 +202,11 @@ if st.button("Start Compute"):
         st.dataframe(df_frequency_scale)
     st.markdown("""---""")
 
-# Menampilkan footer di tengah menggunakan Markdown
-st.markdown("<br><br><br>", unsafe_allow_html=True)  # Spacer untuk memisahkan footer dari konten utama
-st.write("### Firza Aji Zunaarta (5023211002)")
-st.write("### Continuous Wavelength Transform - Analisis Sinyal Nonstasioner")
-st.write("### 2024")
-
-# Untuk memastikan footer berada di bagian bawah, Anda bisa menambahkan spacer jika perlu
-st.markdown("<br><br><br>", unsafe_allow_html=True)
+    # Menampilkan footer di tengah menggunakan Markdown
+    st.markdown("<br><br><br>", unsafe_allow_html=True)  # Spacer untuk memisahkan footer dari konten utama
+    st.write("### Firza Aji Zunaarta (5023211002)")
+    st.write("### Continuous Wavelength Transform - Analisis Sinyal Nonstasioner")
+    st.write("### 2024")
+    
+    # Untuk memastikan footer berada di bagian bawah, Anda bisa menambahkan spacer jika perlu
+    st.markdown("<br><br><br>", unsafe_allow_html=True)
