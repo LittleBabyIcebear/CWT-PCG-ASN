@@ -38,6 +38,46 @@ def cwt(coloumncount, rowcount, a, da, dt, f0, y):
         a += da
     return cwt
 
+
+#Perhitungan Fungsi CWT
+@jit(nopython=True)
+def discrete_forrier_transform(N, fs, signal):
+    
+    #Initial Array
+    X_real = np.zeros(10000)
+    X_imj = np.zeros(10000)
+    MagDFT = np.zeros(10000)
+
+    #DFT
+    for k in range (N):
+        for n in range (N):
+            X_real[k] += (signal[n])*np.cos(2*np.pi*k*n/N)
+            X_imj[k] -= (signal[n])*np.sin(2*np.pi*k*n/N)
+
+    for k in range (N):
+        MagDFT[k] = np.sqrt(np.square(X_real[k])+np.square(X_imj[k]))
+    return MagDFT
+
+def create_plotly_figure(title, xaxis, yaxis, time, signal, name, mode):
+    # Create a Plotly figure
+    fig = go.Figure()
+    color= ['blue', 'red', 'green']
+    for i in range(len(signal)):
+        fig.add_trace(go.Scatter(x=time, y=signal[i], mode=mode, name=name[i], line=dict(color=color[i])))
+
+    # Update layout
+    fig.update_layout(
+        title=title,
+        xaxis_title=xaxis,
+        yaxis_title=yaxis,
+        width=800,
+        height=500,
+        xaxis=dict(showline=True, showgrid=True),
+        yaxis=dict(showline=True, showgrid=True)
+    )
+
+    st.plotly_chart(fig)
+
 st.title("CWT 3D Plot from Scratch Code")
 
 st.sidebar.title("Parameter")
@@ -59,12 +99,12 @@ a = st.sidebar.number_input("Initial Value (x 10^(-4))", value=1)
 a = round(a * 1e-4, 4)  
 
 # Input untuk Delta Skala
-da = st.sidebar.number_input("Delta Skala (x 10^(-4))", value=1)
+da = st.sidebar.number_input("Delta Skala (x 10^(-4))", value=9)
 da = round(da * 1e-4, 4) 
 
 # Input untuk nilai dt
-dt = st.sidebar.number_input("dt (x 10^(-6))", value=125)
-dt = round(dt * 1e-6, 6)  
+dt = st.sidebar.number_input("dt (x 10^(-6))", value=1)
+dt = round(dt * 1e-3, 6)  
 
 # Sidebar Input untuk Frekuensi
 st.sidebar.subheader("Frekuensi")
@@ -108,7 +148,7 @@ if st.button("Start Compute"):
     st.table(df_param)
     st.markdown("""---""")
     #Komputasi CWT
-    X, Y = np.meshgrid(np.arange(rowcount), np.arange(coloumncount))
+    X, Y = np.meshgrid(np.arange(coloumncount), np.arange(rowcount))
     Z = cwt(coloumncount, rowcount, a, da, dt, f0, y).T #transpose CWT
 
     # Membuat subplot dengan 2 kolom
@@ -202,6 +242,12 @@ if st.button("Start Compute"):
         st.dataframe(df_frequency_scale)
     st.markdown("""---""")
 
+    st.header("Frequency Domain")
+    N = len(data[1])
+    MagDFT_full = discrete_forrier_transform(N, 1000, data[1].values)
+    k =  np.arange (0, N, 1, dtype=int)
+    n = np.arange (0, N, 1, dtype=int)
+    create_plotly_figure('DFT Original Signal','Frequency (Hz)','Magnitude',k*1000/N, [MagDFT_full[k]], ['Original Signal'],'markers + lines')
     # Menampilkan footer di tengah menggunakan Markdown
     st.markdown("<br><br><br>", unsafe_allow_html=True)  # Spacer untuk memisahkan footer dari konten utama
     st.write("### Firza Aji Zunaarta (5023211002)")
