@@ -83,11 +83,17 @@ st.title("CWT 3D Plot from Scratch Code")
 st.sidebar.title("Parameter")
 
 #Pemilihan Dataset 
-select_data = st.sidebar.selectbox("Select Data", ["dataset PCG 1", "dataset PCG 2"])
+select_data = st.sidebar.selectbox("Select Data", ["dataset PCG 1", "dataset PCG 2", "ETS Carotid Pulse", "ETS ECG", "ETS PCG"])
 if select_data == "dataset PCG 1":
     data = pd.read_csv("dataset_PCG.txt", sep='\t', header=None)
 elif select_data == "dataset PCG 2":
     data = pd.read_csv("dataset_PCG 2.txt", sep='\t', header=None)
+elif select_data == "ETS Carotid Pulse":
+    data = pd.read_csv("Print_16_CP_RV.txt", sep='\t', header=None)
+elif select_data == "ETS ECG":
+    data = pd.read_csv("Print_16_v1_ECG_RV.txt", sep='\t', header=None)
+elif select_data == "ETS PCG":
+    data = pd.read_csv("Print_16_v2_PCG_RV.txt", sep='\t', header=None)
 
 st.sidebar.subheader("Skala Sumbu")
 coloumncount=st.sidebar.number_input("Sumbu Vertikal", value=100)
@@ -110,7 +116,7 @@ dt = round(dt * 1e-3, 6)
 st.sidebar.subheader("Frekuensi")
 
 # Input untuk frekuensi awal
-f0 = st.sidebar.number_input("Frekuensi Awal (Hz)", value=849)
+f0 = st.sidebar.number_input("Frekuensi Awal (Hz)", value=1000)
 f0 = round(f0 * 1e-3, 3)  
 w0 = 2*np.pi* f0
 
@@ -196,14 +202,18 @@ if st.button("Start Compute"):
         height=600,  # Tinggi figure
         width=1000,  # Lebar figure
         scene=dict(
-            xaxis_title='Scale',  # Label sumbu x untuk 3D plot
-            yaxis_title='Freq',   # Label sumbu y untuk 3D plot
+            xaxis_title='Scale Time (S)',  # Label sumbu x untuk 3D plot
+            yaxis_title='Scale Freq (Hz)',   # Label sumbu y untuk 3D plot
             zaxis_title='Magnitude'  # Label sumbu z untuk 3D plot
         ),
         autosize=True,
-        xaxis2=dict(title="X Axis Label"),  # Label sumbu x untuk 2D Contour
-        yaxis2=dict(title="Y Axis Label")   # Label sumbu y untuk 2D Contour
-    )
+        xaxis=dict(
+            title='Scale Time (s)',  # Label sumbu x pada 2D Contour
+        ),
+        yaxis=dict(
+            title='Scale Frequency (Hz)',  # Label sumbu y pada 2D Contour
+        )
+        )
     # Menampilkan plot
     st.header("Plot CWT")
     with st.spinner("Menghitung CWT ..."):
